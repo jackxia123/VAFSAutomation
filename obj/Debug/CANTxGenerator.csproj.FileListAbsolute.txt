@@ -1,0 +1,61 @@
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\PATAGenerator\CANTxGenerator-branch\obj\Debug\CANTxGenerator.csprojResolveAssemblyReference.cache
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\PATAGenerator\CANTxGenerator-branch\obj\Debug\CANTxGenerator.csprojAssemblyReference.cache
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\PATAGenerator\CANTxGenerator-branch\obj\Debug\MainWindow.g.cs
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\PATAGenerator\CANTxGenerator-branch\obj\Debug\QcLogin.g.cs
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\PATAGenerator\CANTxGenerator-branch\obj\Debug\App.g.cs
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\PATAGenerator\CANTxGenerator-branch\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\PATAGenerator\CANTxGenerator-branch\obj\Debug\CANTxGenerator_MarkupCompile.cache
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\PATAGenerator\CANTxGenerator-branch\obj\Debug\CANTxGenerator_MarkupCompile.lref
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\App.baml
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\QcLogin.g.cs
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\App.g.cs
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\CANTxGenerator_MarkupCompile.cache
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\CANTxGenerator_MarkupCompile.lref
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\MainWindow.g.cs
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\GeneratedInternalTypeHelper.g.cs
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\CANTxGenerator.exe.config
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\CANTxGenerator.exe
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\CANTxGenerator.pdb
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\CustomControls.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\DbcComparer.exe
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\DBCHandling.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\OpStates.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\RBT.QcUtility.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\RBT.Universal.CanTraceAnalyser.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\RBT.Universal.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\RBT.Universal.Keyword.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\System.Windows.Interactivity.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\CustomControls.pdb
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\DbcComparer.pdb
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\DbcComparer.exe.config
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\DBCHandling.pdb
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\OpStates.pdb
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\RBT.QcUtility.pdb
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\RBT.Universal.pdb
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\RBT.Universal.CanTraceAnalyser.pdb
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\RBT.Universal.Keyword.pdb
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\de\System.Windows.Interactivity.resources.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\en\System.Windows.Interactivity.resources.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\es\System.Windows.Interactivity.resources.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\it\System.Windows.Interactivity.resources.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\MainWindow.baml
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\QcLogin.baml
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\Resources\DataGridColumnHeader.baml
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\Resources\MsgPropLayout.baml
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\Resources\ProposedButtonTemplate.baml
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\Resources\SignalConnectionButtonTemplate.baml
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\Resources\TextBlock.baml
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\CANTxGenerator.g.resources
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\CANTxGenerator.Properties.Resources.resources
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\CANTxGenerator.csproj.GenerateResource.cache
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\CANTxGenerator.csproj.CoreCompileInputs.cache
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\CANTxGenerator.csproj.CopyComplete
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\CANTxGenerator.exe
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\CANTxGenerator.pdb
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Debug\CANTxGenerator.csprojAssemblyReference.cache

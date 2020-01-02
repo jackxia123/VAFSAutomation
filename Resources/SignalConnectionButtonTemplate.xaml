@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CANTxGenerator.Resources">
+    <ControlTemplate TargetType="Button" x:Key="SignalConnectionButtonTemplate">
+        <Border BorderBrush="Transparent" BorderThickness="0" Background="LightCoral" Name="PART_Background" HorizontalAlignment="{TemplateBinding FrameworkElement.HorizontalAlignment}">
+            <ContentPresenter Content="{TemplateBinding ContentControl.Content}" HorizontalAlignment="Center"  VerticalAlignment="Center" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+                <Setter Property="Border.Background" TargetName="PART_Background" Value="#FFe923a5" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+</ResourceDictionary>

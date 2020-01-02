@@ -1,0 +1,11 @@
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.CanTraceAnalyser\obj\Debug\RBT.Universal.CanEvalParameters.csprojAssemblyReference.cache
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.CanTraceAnalyser\obj\Debug\RBT.Universal.CanEvalParameters.csproj.CoreCompileInputs.cache
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.CanTraceAnalyser\bin\Debug\RBT.Universal.CanTraceAnalyser.dll
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.CanTraceAnalyser\bin\Debug\RBT.Universal.CanTraceAnalyser.pdb
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.CanTraceAnalyser\bin\Debug\DBCHandling.dll
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.CanTraceAnalyser\bin\Debug\RBT.Universal.Keyword.dll
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.CanTraceAnalyser\bin\Debug\DBCHandling.pdb
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.CanTraceAnalyser\bin\Debug\RBT.Universal.Keyword.pdb
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.CanTraceAnalyser\obj\Debug\RBT.Universal.CanEvalParameters.csproj.CopyComplete
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.CanTraceAnalyser\obj\Debug\RBT.Universal.CanTraceAnalyser.dll
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.CanTraceAnalyser\obj\Debug\RBT.Universal.CanTraceAnalyser.pdb

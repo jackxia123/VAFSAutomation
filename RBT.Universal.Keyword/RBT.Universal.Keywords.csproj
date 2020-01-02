@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0F63CD9D-CD57-43B0-A0DD-49E8E4770381}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RBT.Universal.Keyword</RootNamespace>
+    <AssemblyName>RBT.Universal.Keyword</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Keywords\CheckCanSignal.cs" />
+    <Compile Include="Keywords\EvalECUSignals.cs" />
+    <Compile Include="Keywords\SendKey.cs" />
+    <Compile Include="Keywords\ReadFPC.cs" />
+    <Compile Include="Keywords\ReadFPS.cs" />
+    <Compile Include="Keywords\GetSeed.cs" />
+    <Compile Include="Keywords\WaitForUser.cs" />
+    <Compile Include="Keywords\SetModelValues.cs" />
+    <Compile Include="Keywords\UndoSetModelValues.cs" />
+    <Compile Include="Keywords\EcuOnOff.cs" />
+    <Compile Include="Keywords\XflashAlgo.cs" />
+    <Compile Include="Keywords\StartContinousRequest.cs" />
+    <Compile Include="Keywords\SendRequest.cs" />
+    <Compile Include="Keywords\StartDiagComCUHideHeader.cs" />
+    <Compile Include="Keywords\StartDiagComCU.cs" />
+    <Compile Include="Keywords\StopDiagComCU.cs" />
+    <Compile Include="Keywords\StopContinousRequest.cs" />
+    <Compile Include="Keywords\StopDiagComRB.cs" />
+    <Compile Include="Keywords\StartDiagComRB.cs" />
+    <Compile Include="Keywords\RunDiagSeqCU.cs" />
+    <Compile Include="Keywords\RunDiagSeqRB.cs" />
+    <Compile Include="Keywords\ReadVra.cs" />
+    <Compile Include="Keywords\ReadVr.cs" />
+    <Compile Include="Keywords\ReadEcuSignals.cs" />
+    <Compile Include="Keywords\ReadCanSignals.cs" />
+    <Compile Include="Keywords\ReadLamps.cs" />
+    <Compile Include="Keywords\ShortLines.cs" />
+    <Compile Include="Keywords\UndoShortLines.cs" />
+    <Compile Include="Keywords\UndoInterruptLines.cs" />
+    <Compile Include="Keywords\InterruptLines.cs" />
+    <Compile Include="Keywords\EditSignal.cs" />
+    <Compile Include="DependentKeyword.cs" />
+    <Compile Include="DependentParameter.cs" />
+    <Compile Include="Interfaces.cs" />
+    <Compile Include="Keyword.cs" />
+    <Compile Include="Keywords\CounterFail.cs" />
+    <Compile Include="Keywords\DoLineManipulation.cs" />
+    <Compile Include="Keywords\ResetLineManipulation.cs" />
+    <Compile Include="Keywords\UndoEditSignal.cs" />
+    <Compile Include="Keywords\UndoCounterFail.cs" />
+    <Compile Include="Keywords\UndoChecksumFail.cs" />
+    <Compile Include="Keywords\ChecksumFail.cs" />
+    <Compile Include="Keywords\UndoDamageDLC.cs" />
+    <Compile Include="Keywords\DamageDLC.cs" />
+    <Compile Include="Keywords\EnableMessage.cs" />
+    <Compile Include="Keywords\EcuOff.cs" />
+    <Compile Include="Keywords\MM6Start.cs" />
+    <Compile Include="Keywords\ResetCanManipulation.cs" />
+    <Compile Include="Keywords\MM6Stop.cs" />
+    <Compile Include="Keywords\DisableMessage.cs" />
+    <Compile Include="Keywords\ReadCanLamps.cs" />
+    <Compile Include="Keywords\Wait.cs" />
+    <Compile Include="Keywords\TraceStart.cs" />
+    <Compile Include="Keywords\TraceStop.cs" />
+    <Compile Include="Keywords\StimuliStop.cs" />
+    <Compile Include="Keywords\StimuliStart.cs" />
+    <Compile Include="Keywords\EcuOn.cs" />
+    <Compile Include="Model.cs" />
+    <Compile Include="PairedDependentKeyword.cs" />
+    <Compile Include="PairedKeyword.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

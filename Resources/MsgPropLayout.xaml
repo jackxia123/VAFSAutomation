@@ -1,0 +1,44 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CANTxGenerator.Resources"
+                    xmlns:parent="clr-namespace:CANTxGenerator">
+
+    <parent:ImageVisibilityConverter x:Key="Connection2OkConverter"></parent:ImageVisibilityConverter>
+    <parent:Connection2ForegroundConverter x:Key="Connection2ForegroundConverter"></parent:Connection2ForegroundConverter>
+    <parent:Collection2StringConverter x:Key="Collection2StringConverter"></parent:Collection2StringConverter>
+    <parent:Bool2StringConverter x:Key="Bool2StringConverter"></parent:Bool2StringConverter>
+    <parent:Bool2ImageConverter x:Key="Bool2ImageConverter"></parent:Bool2ImageConverter>
+    <parent:SignalCodingConverter x:Key="SignalCodingConverter"></parent:SignalCodingConverter>
+    <parent:CombGrpViewConverter x:Key="CombGrpViewConverter"></parent:CombGrpViewConverter>
+    <parent:IsCheckedConverter x:Key="IsCheckedConverter"></parent:IsCheckedConverter>
+    <parent:Select2VisibilityConverter x:Key="Select2VisibilityConverter"></parent:Select2VisibilityConverter>
+    <DataTemplate x:Key="MsgPropLayout" DataType="DBCHandling:DbcMessage">
+        <WrapPanel>
+            <TextBlock Text="{Binding Path=Name, StringFormat=Name: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=ID, StringFormat=ID(Decimal): {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=DLC, StringFormat=DLC: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=CycleTime, StringFormat=CycleTime: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=Signals.Count, StringFormat=Signal No.: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=Transmitters[0], StringFormat=Sender: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=Receivers,Converter={StaticResource Collection2StringConverter}, StringFormat=Receiver: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+        </WrapPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="SigPropLayout" DataType="DBCHandling:DbcSignal">
+        <WrapPanel>
+            <TextBlock Text="{Binding Path=Name, StringFormat=Name: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=StartBit, StringFormat=StartBit: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=Length, StringFormat=Length: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=ByteOrder, StringFormat=ByteOrder: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=ValueType, StringFormat=Type: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=Factor, StringFormat=Factor: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=Offset, StringFormat=Offset: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=Unit, StringFormat=Unit: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=InitValue, StringFormat=Init Value: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=Maximum, StringFormat=Maximum: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=Minimum, StringFormat=Minimum: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=Receivers, Converter={StaticResource Collection2StringConverter},StringFormat=Receiver: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+            <TextBlock Text="{Binding Path=Coding, Converter={StaticResource SignalCodingConverter}, StringFormat=Coding: {0:G}}" Style="{Binding Source={StaticResource tbStyle }}"/>
+        </WrapPanel>
+    </DataTemplate>
+</ResourceDictionary>

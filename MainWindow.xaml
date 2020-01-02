@@ -1,0 +1,752 @@
+﻿<Controls:MetroWindow x:Name="MainWindow1" x:Class="CANTxGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CANTxGenerator"
+        xmlns:e="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:lib="clr-namespace:CustomControls;assembly=CustomControls"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="FlashLight_V1.0"  Background="#FFBCB9FB" Height="1543.141" Width="2560.275"  Icon="Icon/flash.png" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"
+       >
+    <!--<Window.DataContext>
+        <localviewmodel:BtnImportViewModel></localviewmodel:BtnImportViewModel>
+    </Window.DataContext>-->
+    <!--Command Area-->
+    <Window.CommandBindings>
+        <CommandBinding Command="local:treeViewCommands.Expand" Executed="tvExpand_Executed" CanExecute="tvExpand_CanExecuted"/>
+        <CommandBinding Command="local:treeViewCommands.Collapse" Executed="tvCollapse_Executed" CanExecute="tvCollapse_CanExecuted"/>
+        <CommandBinding Command="local:treeViewCommands.CopyName" Executed="tvCopyName_Executed" CanExecute="tvCopyName_CanExecuted"/>
+    </Window.CommandBindings>
+    <!--Resource Area-->
+    <Window.Resources>
+        <!--Converters-->
+        <local:ImageVisibilityConverter x:Key="Connection2OkConverter"/>
+        <local:Connection2ForegroundConverter x:Key="Connection2ForegroundConverter"/>
+        <local:Collection2StringConverter x:Key="Collection2StringConverter"/>
+        <local:Bool2StringConverter x:Key="Bool2StringConverter"/>
+        <local:Bool2ImageConverter x:Key="Bool2ImageConverter"/>
+        <local:SignalCodingConverter x:Key="SignalCodingConverte"/>
+        <local:CombGrpViewConverter x:Key="CombGrpViewConverter"/>
+        <local:IsCheckedConverter x:Key="IsCheckedConverter"/>
+        <local:Select2VisibilityConverter x:Key="Select2VisibilityConverter"/>
+    </Window.Resources>
+
+    <!--Main Grid-->
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" UseLayoutRounding="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="21"/>
+        </Grid.RowDefinitions>
+
+        <!--Configuration Area Grid-->
+        <Grid x:Name="grid" Grid.Row="1" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="200" Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition MinWidth="317"/>
+            </Grid.ColumnDefinitions>
+
+            <GridSplitter Background="YellowGreen" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Width="3" VerticalAlignment="Stretch" HorizontalAlignment="Center" ShowsPreview="False">
+            </GridSplitter>
+
+            <!-- Project information and DBC treeview area-->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <!-- Project information area-->
+                <StackPanel Name="spPrjInfo" Background="AliceBlue" Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" >
+                        <Label Content="No. Of Variant" Margin="5"/>
+                        <TextBox Style="{StaticResource {x:Static ToolBar.TextBoxStyleKey}}" x:Name="tbVariant"  Height="22" Margin="0" Text="{Binding ElementName=MainWindow1, Path= ConfManager.NoOfVariant, Mode=TwoWay, FallbackValue=1}" Width="120"  />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" >
+                        <Label x:Name="lbSelectNode" Content="Node:" Margin="5" />
+                        <ComboBox  Style="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}" Margin="5" x:Name="comboNodes" Width="100"   SelectedValue="{Binding ElementName=MainWindow1,Path=ConfManager.SelectedNode, Mode=TwoWay}" ItemsSource="{Binding ElementName=MainWindow1,Path=ConfManager.DbcNodes}" SelectionChanged="comboNodes_SelectionChanged"/>
+                        <Image Margin="5" Source="{Binding Icon/Message.png}" Stretch="None" ToolTip="No. Of Message for selected node,configured/All"/>
+                        <TextBlock x:Name="NoOfConfiguredMsgs" Margin="5" Style="{x:Null}" Text="{Binding ElementName=MainWindow1,Path=ConfManager.ConfiguredMessages.Count, Mode=OneWay, FallbackValue=0}"/>
+                        <TextBlock Margin="5" Style="{x:Null}" Text="/"/>
+                        <TextBlock x:Name="NoOfAllMsgs" Margin="5" Style="{x:Null}" Text="{Binding ElementName=MainWindow1,Path=ConfManager.Messages.Count, Mode=OneWay, FallbackValue=0}"/>
+                        <Image Margin="5" Source="{Binding Icon/Signal.png}" Stretch="None" ToolTip="No. Of Signal for selected node,configured/All"/>
+                        <TextBlock x:Name="NoOfConfiguredMsgSigs" Margin="5" Style="{x:Null}" Text="{Binding ElementName=MainWindow1,Path=ConfManager.ConfiguredSignals.Count, Mode=OneWay, FallbackValue=0}"/>
+                        <TextBlock Margin="5" Style="{x:Null}" Text="/"/>
+                        <TextBlock x:Name="NoOfAllSigs" Margin="5" Style="{x:Null}" Text="{Binding ElementName=MainWindow1,Path=ConfManager.Signals.Count, Mode=OneWay, FallbackValue=0}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!--DBC treeview area-->
+
+                <!--    <ScrollViewer Background="Aqua" Grid.Column="0" HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto" MinWidth="200" HorizontalScrollBarVisibility="Hidden" Margin="0,0,0,0"> -->
+                <TreeView   Grid.Row="1"  ToolTip="{Binding ElementName=MainWindow1,Path=ConfManager.ProjectDBC}" x:Name="treeView"  HorizontalAlignment="Stretch" MinWidth="200" BorderBrush="#FF1B67F0" DataContext="{Binding ElementName=MainWindow1,Path=ConfManager.Messages,Mode=TwoWay}">
+                    <e:Interaction.Behaviors>
+                        <local:BindableSelectedItemBehavior SelectedItem="{Binding ElementName=MainWindow1,Path=ConfManager.SelectedCANTxItem, Mode=TwoWay}" />
+                    </e:Interaction.Behaviors>
+                    <TreeView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Expand All" Command="local:treeViewCommands.Expand" >
+                                <MenuItem.Icon>
+                                    <!--<Image Source="Icon/Expand.png"></Image>-->
+                                    <Image Source="Icon/Expand.png"></Image>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Collapse All" Command="local:treeViewCommands.Collapse" >
+                                <MenuItem.Icon>
+                                    <Image Source="Icon/Collapse.png"></Image>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Copy All" Command="local:treeViewCommands.CopyName">
+                                <MenuItem.Icon>
+                                    <Image Source="Icon/Expand.png"></Image>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </TreeView.ContextMenu>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Path=Signals, Mode=TwoWay}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="Icon/Message.png" Stretch="None"/>
+                                <TextBlock Text="{Binding Path=Name, Mode=TwoWay}" Margin="5,0,5,0" >
+                                    <TextBlock.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Copy Name" Command="local:treeViewCommands.CopyName" >
+                                                <MenuItem.Icon>
+                                                    <Image Source="Icon/Expand.png"></Image>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </TextBlock.ContextMenu>
+                                    <TextBlock.Foreground>
+                                        <MultiBinding Converter="{StaticResource Connection2ForegroundConverter}" NotifyOnSourceUpdated="True">
+                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=TreeViewItem}" NotifyOnSourceUpdated="True"/>
+                                            <Binding ElementName="MainWindow1" Path="ConfManager.Connections" NotifyOnTargetUpdated="True"/>
+                                        </MultiBinding>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                                <Image Source="Icon/Ok.png" Stretch="None">
+                                    <Image.Visibility>
+                                        <MultiBinding Converter="{StaticResource Connection2OkConverter}">
+                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=TreeViewItem}"/>
+                                            <Binding ElementName="MainWindow1" Path="ConfManager.Connections"/>
+                                        </MultiBinding>
+                                    </Image.Visibility>
+                                </Image>
+                                <TextBlock Text=" [" Foreground="Blue" />
+                                <TextBlock Text="{Binding Signals.Count}" Foreground="Blue" />
+                                <TextBlock Text="]" Foreground="Blue" />
+
+                            </StackPanel>
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Icon/Signal.png" Stretch="None"/>
+                                        <TextBlock Text="{Binding Path=Name}" Margin="5,0,5,0" >
+                                            <TextBlock.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="Copy Name" Command="local:treeViewCommands.CopyName" >
+                                                        <MenuItem.Icon>
+                                                            <Image Source="Icon/Expand.png"></Image>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                </ContextMenu>
+                                            </TextBlock.ContextMenu>
+                                            <TextBlock.Foreground>
+                                                <MultiBinding Converter="{StaticResource Connection2ForegroundConverter}" NotifyOnSourceUpdated="True">
+                                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=TreeViewItem}" NotifyOnSourceUpdated="True"/>
+                                                    <Binding ElementName="MainWindow1" Path="ConfManager.Connections" NotifyOnTargetUpdated="True"/>
+                                                </MultiBinding>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+
+                                        <Image Source="Icon/Connection.png" Stretch="None">
+                                            <Image.Visibility>
+                                                <MultiBinding Converter="{StaticResource Connection2OkConverter}">
+                                                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=TreeViewItem}"/>
+                                                    <Binding ElementName="MainWindow1" Path="ConfManager.Connections"/>
+                                                </MultiBinding>
+                                            </Image.Visibility>
+                                        </Image>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+
+            </Grid>
+
+
+            <!--Configuration Area for BusHW , Network Generic and Signal Based-->
+            <Border Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Background="Lavender" >
+                <Grid x:Name="gridConfig">
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <GridSplitter Background="YellowGreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Height="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" ShowsPreview="False">
+                    </GridSplitter>
+                    <GridSplitter Background="YellowGreen" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Height="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" ShowsPreview="False">
+                    </GridSplitter>
+                    <GridSplitter Background="YellowGreen" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Height="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" ShowsPreview="False">
+                    </GridSplitter>
+                    <GridSplitter Background="YellowGreen" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Height="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" ShowsPreview="False">
+                    </GridSplitter>
+
+                    <!-- HHC Test configration-->
+                    <Expander  Name="expdBusGeneric" IsExpanded="True"  Background="AliceBlue"  Grid.Row="0"  Margin="5"  Header=" HHC Test Configuration" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+                        <Expander.Content>
+                            <lib:FlipPanel x:Name="fpNetworkConfig" BorderBrush="DarkOrange" BorderThickness="2" IsFlipped="False"   CornerRadius="4" Margin="10" >
+                                <lib:FlipPanel.FrontContent>
+                                    <WrapPanel x:Name="rpControl" >
+                                        <Label>Product</Label>
+                                        <ComboBox Style="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}" Name="cbProductType" SelectedValuePath="Content" SelectedValue="{Binding ElementName=MainWindow1,Path=ConfManager.ProductType,Mode=TwoWay}" >
+                                            <ComboBoxItem>ESP</ComboBoxItem>
+                                            <ComboBoxItem>ESPHevx</ComboBoxItem>
+                                            <ComboBoxItem>IPB</ComboBoxItem>
+                                            <ComboBoxItem>Gen10</ComboBoxItem>
+                                        </ComboBox>
+                                        <CheckBox x:Name="cbIncBusGenericTC" Content="Include HHC Regression Test Case" Margin="5"  IsChecked= "{Binding ElementName=MainWindow1,Converter={StaticResource IsCheckedConverter}, Path=ConfManager.BusGenericConfig.IsIncludeBusGeneric,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+                                        <CheckBox x:Name="cbIsFaultCanHShUbatt" ToolTip="Check your project whether exists APBMi" IsEnabled="{Binding ElementName=cbIncBusGenericTC,Path=IsChecked}" Content="APBMi_Exist" Margin="5"  IsChecked= "{Binding ElementName=MainWindow1,Converter={StaticResource IsCheckedConverter}, Path=ConfManager.BusGenericConfig.IsNoFaultCanHUbattSh,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+                                        <CheckBox x:Name="cbIsFaultCanLShGnd" ToolTip="Check your project whether Yawrate exterior" IsEnabled="{Binding ElementName=cbIncBusGenericTC,Path=IsChecked}"  Content="Exterior_YawRate" Margin="5"  IsChecked= "{Binding ElementName=MainWindow1,Converter={StaticResource IsCheckedConverter}, Path=ConfManager.BusGenericConfig.IsNoFaultCanLGndSh,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIsFaultCanLShGnd,Path=IsChecked}" >
+                                            <Label>Ax CAN Signal Name</Label>
+                                            <TextBox Width="50" x:Name="tbNUV" ToolTip="Input Ax CAN signal name" Margin="5" Text= "{Binding ElementName=MainWindow1, Path=ConfManager.BusGenericConfig.ThresholdNUV,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncBusGenericTC,Path=IsChecked}" >
+                                            <Label>HHC Active Signal Name</Label>
+                                            <TextBox Width="150" x:Name="tbHydrUV" Margin="5" ToolTip="Input HHC active CAN signal name"   Text= "{Binding ElementName=MainWindow1, Path=ConfManager.BusGenericConfig.ThresholdHydrUV,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncBusGenericTC,Path=IsChecked}" >
+                                            <Label>Brake Light Net Signals</Label>
+                                            <TextBox Width="150" x:Name="tbHydrHardUV" Margin="5" ToolTip="Input Brake Light CAN signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.BusGenericConfig.ThresholdHydrHardUV,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncBusGenericTC,Path=IsChecked}" >
+                                            <Label>DOORS Link</Label>
+                                            <TextBox Width="800" x:Name="tbDoosLink" Margin="5"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.BusGenericConfig.DoorsLink,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                                        </StackPanel>
+                                    </WrapPanel>
+
+                                </lib:FlipPanel.FrontContent>
+                                <lib:FlipPanel.BackContent>
+                                    <Grid Margin="6">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="200"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal" >
+                                            <TextBlock TextWrapping="Wrap" Margin="3" FontSize="16" Foreground="DarkMagenta">HHC Regression Test Case:</TextBlock>
+                                            <Button Background="Coral" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Right" Name="btnImpBus"  Click="btnImpBus_Click" Tag="HHC" >Import2QC</Button>
+                                        </StackPanel>
+
+                                        <DataGrid Name="dgBus" RowHeight="50"  CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"  SelectionMode="Extended" SelectionUnit="CellOrRowHeader" AutoGenerateColumns="False" LoadingRow="DataGrid_LoadingRow" Grid.Row="1" 
+                                              ItemsSource="{Binding ElementName=MainWindow1,Path=ConfManager.BusGenericConfig.BusGenericTScript}" VerticalScrollBarVisibility="Visible" >
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Name" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=TestCaseName }" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="TestDescription" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=TestDescription}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="ExpectedResult" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=ExpectedResult}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="DoorsLink" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=DoorsLink}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Subject" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=QcFolderPath}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Script" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=TestCaseScript}" HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+
+                                                </DataGridTemplateColumn>
+
+                                            </DataGrid.Columns>
+
+                                        </DataGrid>
+                                    </Grid>
+                                </lib:FlipPanel.BackContent>
+                            </lib:FlipPanel>
+                        </Expander.Content>
+                    </Expander>
+
+                    <!-- VLC Test configration-->
+                    <Expander  Name="expVLCGeneric" IsExpanded="True"  Background="AliceBlue"  Grid.Row="2"  Margin="5"  Header=" VLC Test Configuration" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+                        <Expander.Content>
+                            <lib:FlipPanel x:Name="fpVLCConfig" BorderBrush="DarkOrange" BorderThickness="2" IsFlipped="False"   CornerRadius="4" Margin="10" >
+                                <lib:FlipPanel.FrontContent>
+                                    <WrapPanel x:Name="rpVlcControl" >
+                                        <CheckBox x:Name="cbIncVlcGenericTC" Content="Include HHC Regression Test Case" Margin="5"  IsChecked= "{Binding ElementName=MainWindow1,Converter={StaticResource IsCheckedConverter}, Path=ConfManager.VLCGenericConfig.IsIncludeVLCGeneric,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+                                        <CheckBox x:Name="cbAxApbmi" ToolTip="Check your project whether exists APBMi" IsEnabled="{Binding ElementName=cbIncVlcGenericTC,Path=IsChecked}" Content="APBMi_Exist" Margin="5"  IsChecked= "{Binding ElementName=MainWindow1,Converter={StaticResource IsCheckedConverter}, Path=ConfManager.VLCGenericConfig.IsApbMi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncVlcGenericTC,Path=IsChecked}" >
+                                            <Label>Acctgtax</Label>
+                                            <TextBox Width="150" x:Name="tbAxcanSignal" ToolTip="Input ACC target deceleration speed net signal name" Margin="5" Text= "{Binding ElementName=MainWindow1, Path=ConfManager.VLCGenericConfig.ACCTgtAx,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncVlcGenericTC,Path=IsChecked}" >
+                                            <Label>Accbrakepreferred</Label>
+                                            <TextBox Width="150" x:Name="tbvlcbarkepreferred" Margin="5" ToolTip="Input barke preferred net signal name"   Text= "{Binding ElementName=MainWindow1, Path=ConfManager.VLCGenericConfig.ACCBrakePreferred,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncVlcGenericTC,Path=IsChecked}" >
+                                            <Label>Acctgtaxlowerlimit</Label>
+                                            <TextBox Width="150" x:Name="tbacctgtaxlowerlimit" Margin="5" ToolTip="Input ACC target lower limit net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.VLCGenericConfig.ACCTgtAxLowerLim,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncVlcGenericTC,Path=IsChecked}" >
+                                            <Label>Acctgtaxupperlimit</Label>
+                                            <TextBox Width="150" x:Name="tbacctgtaxupperlimit" Margin="5" ToolTip="Input ACC target upper limit net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.VLCGenericConfig.ACCTgtAxUpperLim,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncVlcGenericTC,Path=IsChecked}" >
+                                            <Label>Acctgtaxlowercomftband</Label>
+                                            <TextBox Width="150" x:Name="tbacctgtaxlowercomftband" Margin="5" ToolTip="Input ACC target lower comfort band limit net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.VLCGenericConfig.ACCTgtAxLowerComftBand,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncVlcGenericTC,Path=IsChecked}" >
+                                            <Label>Acctgtaxuppercomftband</Label>
+                                            <TextBox Width="150" x:Name="tbacctgtaxuppercomftband" Margin="5" ToolTip="Input ACC target upper comfort band limit net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.VLCGenericConfig.ACCTgtAxUpperComftBand,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncVlcGenericTC,Path=IsChecked}" >
+                                            <Label>AccMode</Label>
+                                            <TextBox Width="150" x:Name="tbaccMode" Margin="5" ToolTip="Input ACC mode net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.VLCGenericConfig.ACCMode,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncVlcGenericTC,Path=IsChecked}" >
+                                            <Label>ACCVlcShutdownReq</Label>
+                                            <TextBox Width="150" x:Name="tbaccVlcShutdownReq" Margin="5" ToolTip="Input vlc shutdown request net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.VLCGenericConfig.ACCVlcShutdownReq,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncVlcGenericTC,Path=IsChecked}" >
+                                            <Label>VLCActive</Label>
+                                            <TextBox Width="150" x:Name="tbvlcActive" Margin="5" ToolTip="Input vlc active net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.VLCGenericConfig.VLCActive,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncVlcGenericTC,Path=IsChecked}" >
+                                            <Label>VLCAvailable</Label>
+                                            <TextBox Width="150" x:Name="tbvlcAvailable" Margin="5" ToolTip="Input vlc available net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.VLCGenericConfig.VLCActive,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncVlcGenericTC,Path=IsChecked}" >
+                                            <Label>DOORS Link</Label>
+                                            <TextBox Width="800" x:Name="tbvlcDoosLink" Margin="5"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.VLCGenericConfig.DoorsLink,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                                        </StackPanel>
+                                    </WrapPanel>
+
+
+                                </lib:FlipPanel.FrontContent>
+                                <lib:FlipPanel.BackContent>
+                                    <Grid Margin="6">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="200"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal" >
+                                            <TextBlock TextWrapping="Wrap" Margin="3" FontSize="16" Foreground="DarkMagenta">VLC Regression Test Case:</TextBlock>
+                                            <Button Background="Coral" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Right" Name="btnvlcImpBus"  Click="btnImpBus_Click" Tag="VLC">Import2QC</Button>
+                                        </StackPanel>
+
+                                        <DataGrid Name="dgvlcBus" RowHeight="50"  CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"  SelectionMode="Extended" SelectionUnit="CellOrRowHeader" AutoGenerateColumns="False" LoadingRow="DataGrid_LoadingRow" Grid.Row="1" 
+                                              ItemsSource="{Binding ElementName=MainWindow1,Path=ConfManager.VLCGenericConfig.VLCGenericTScript}" VerticalScrollBarVisibility="Visible" >
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Name" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=TestCaseName }" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="TestDescription" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=TestDescription}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="ExpectedResult" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=ExpectedResult}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="DoorsLink" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=DoorsLink}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Subject" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=QcFolderPath}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Script" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=TestCaseScript}" HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+
+                                                </DataGridTemplateColumn>
+
+                                            </DataGrid.Columns>
+
+                                        </DataGrid>
+                                    </Grid>
+                                </lib:FlipPanel.BackContent>
+                            </lib:FlipPanel>
+                        </Expander.Content>
+                    </Expander>
+
+                    <!-- HBA Test configration-->
+                    <Expander  Name="expHBAGeneric" IsExpanded="True"  Background="AliceBlue"  Grid.Row="4"  Margin="5"  Header="HBA Test Configuration" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+                        <Expander.Content>
+                            <lib:FlipPanel x:Name="fpHBAConfig" BorderBrush="DarkOrange" BorderThickness="2" IsFlipped="False"   CornerRadius="4" Margin="10" >
+                                <lib:FlipPanel.FrontContent>
+                                    <WrapPanel x:Name="rpHBAControl" >
+                                        <CheckBox x:Name="cbIncHBAGenericTC" Content="Include HBA Regression Test Case" Margin="5"  IsChecked= "{Binding ElementName=MainWindow1,Converter={StaticResource IsCheckedConverter}, Path=ConfManager.HBAGenericConfig.IsIncludeHBAGeneric,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+                                        <CheckBox x:Name="cbHbaAxApbmi" ToolTip="Check your project whether exists APBMi" IsEnabled="{Binding ElementName=cbIncHBAGenericTC,Path=IsChecked}" Content="APBMi_Exist" Margin="5"  IsChecked= "{Binding ElementName=MainWindow1,Converter={StaticResource IsCheckedConverter}, Path=ConfManager.HBAGenericConfig.IsApbMi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+                                        <CheckBox x:Name="cbHbaAba" ToolTip="Check your project whether exists ABA" IsEnabled="{Binding ElementName=cbIncHBAGenericTC,Path=IsChecked}" Content="ABA_Exist" Margin="5"  IsChecked= "{Binding ElementName=MainWindow1,Converter={StaticResource IsCheckedConverter}, Path=ConfManager.HBAGenericConfig.IsABAInclude,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbHbaAba,Path=IsChecked}" >
+                                            <Label>AbaInvervention</Label>
+                                            <TextBox Width="150" x:Name="tbAbaIntervention" ToolTip="Input ABA intervention net signal name" Margin="5" Text= "{Binding ElementName=MainWindow1, Path=ConfManager.HBAGenericConfig.ABAIntervention,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbHbaAba,Path=IsChecked}" >
+                                            <Label>ABArequest</Label>
+                                            <TextBox Width="150" x:Name="tbabarequest" Margin="5" ToolTip="Input ABA request net signal name"   Text= "{Binding ElementName=MainWindow1, Path=ConfManager.HBAGenericConfig.ABARequest,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbHbaAba,Path=IsChecked}" >
+                                            <Label>ABAlevel</Label>
+                                            <TextBox Width="150" x:Name="tbabalevel" Margin="5" ToolTip="Input ABA level net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.HBAGenericConfig.ABALevel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncHBAGenericTC,Path=IsChecked}" >
+                                            <Label>DOORS Link</Label>
+                                            <TextBox Width="800" x:Name="tbHBADoosLink" Margin="5"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.HBAGenericConfig.DoorsLink,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                                        </StackPanel>
+                                    </WrapPanel>
+                                </lib:FlipPanel.FrontContent>
+                                <lib:FlipPanel.BackContent>
+                                    <Grid Margin="6">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="200"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal" >
+                                            <TextBlock TextWrapping="Wrap" Margin="3" FontSize="16" Foreground="DarkMagenta">HBA Regression Test Case:</TextBlock>
+                                            <Button Background="Coral" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Right" Name="btnHBAImpBus"  Click="btnImpBus_Click" Tag="HBA">Import2QC</Button>
+                                        </StackPanel>
+
+                                        <DataGrid Name="dgHBABus" RowHeight="50"  CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"  SelectionMode="Extended" SelectionUnit="CellOrRowHeader" AutoGenerateColumns="False" LoadingRow="DataGrid_LoadingRow" Grid.Row="1" 
+                                              ItemsSource="{Binding ElementName=MainWindow1,Path=ConfManager.HBAGenericConfig.HBAGenericTScript}" VerticalScrollBarVisibility="Visible" >
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Name" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=TestCaseName }" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="TestDescription" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=TestDescription}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="ExpectedResult" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=ExpectedResult}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="DoorsLink" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=DoorsLink}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Subject" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=QcFolderPath}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Script" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=TestCaseScript}" HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+
+                                                </DataGridTemplateColumn>
+
+                                            </DataGrid.Columns>
+
+                                        </DataGrid>
+                                    </Grid>
+                                </lib:FlipPanel.BackContent>
+                            </lib:FlipPanel>
+                        </Expander.Content>
+                    </Expander>
+
+                    <!--CDD Test configuration-->
+                    <Expander  Name="expCDDGeneric" IsExpanded="False"  Background="AliceBlue"  Grid.Row="6"  Margin="5"  Header="CDD Test Configuration" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+                        <Expander.Content>
+                            <lib:FlipPanel x:Name="fpCDDConfig" BorderBrush="DarkOrange" BorderThickness="2" IsFlipped="False"   CornerRadius="4" Margin="10" >
+                                <lib:FlipPanel.FrontContent>
+                                    <WrapPanel x:Name="rpCDDControl" >
+                                        <CheckBox x:Name="cbIncCDDGenericTC" Content="Include CDD Regression Test Case" Margin="5"  IsChecked= "{Binding ElementName=MainWindow1,Converter={StaticResource IsCheckedConverter}, Path=ConfManager.CDDGenericConfig.IsIncludeCDDGeneric,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+                                        <CheckBox x:Name="cbCDDAxApbmi" ToolTip="Check your project whether exists APBMi" IsEnabled="{Binding ElementName=cbIncCDDGenericTC,Path=IsChecked}" Content="APBMi_Exist" Margin="5"  IsChecked= "{Binding ElementName=MainWindow1,Converter={StaticResource IsCheckedConverter}, Path=ConfManager.CDDGenericConfig.IsApbMi,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncCDDGenericTC,Path=IsChecked}" >
+                                            <Label>Acctgtax</Label>
+                                            <TextBox Width="150" x:Name="tbacctgtax" ToolTip="Input Acc target ax net signal name" Margin="5" Text= "{Binding ElementName=MainWindow1, Path=ConfManager.CDDGenericConfig.ACCTgtAx,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncCDDGenericTC,Path=IsChecked}" >
+                                            <Label>Acctgtaxlowerlimit</Label>
+                                            <TextBox Width="150" x:Name="tbcddtgtaxlowerlimit" Margin="5" ToolTip="Input acc target low limit net signal name"   Text= "{Binding ElementName=MainWindow1, Path=ConfManager.CDDGenericConfig.ACCTgtAxLowerLim,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncCDDGenericTC,Path=IsChecked}" >
+                                            <Label>Acctgtaxupperlimit</Label>
+                                            <TextBox Width="150" x:Name="tbcddtgtaxupperlimit" Margin="5" ToolTip="Input acc target upper limit net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.CDDGenericConfig.ACCTgtAxUpperLim,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncCDDGenericTC,Path=IsChecked}" >
+                                            <Label>Acctgtaxlowercomftband</Label>
+                                            <TextBox Width="150" x:Name="tbcddtgtaxlowercomftband" Margin="5" ToolTip="Input acc target lower confort band net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.CDDGenericConfig.ACCTgtAxLowerComftBand,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncCDDGenericTC,Path=IsChecked}" >
+                                            <Label>Acctgtaxlowercomftband</Label>
+                                            <TextBox Width="150" x:Name="tbcddTgtAxUpperComftBand" Margin="5" ToolTip="Input acc target upper confort band net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.CDDGenericConfig.ACCTgtAxUpperComftBand,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncCDDGenericTC,Path=IsChecked}" >
+                                            <Label>AccMode</Label>
+                                            <TextBox Width="150" x:Name="tbaccforCDDMode" Margin="5" ToolTip="Input acc mode net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.CDDGenericConfig.ACCMode,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncCDDGenericTC,Path=IsChecked}" >
+                                            <Label>AccMode</Label>
+                                            <TextBox Width="150" x:Name="tbcddActive" Margin="5" ToolTip="Input cdd active net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.CDDGenericConfig.CDDActive,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncCDDGenericTC,Path=IsChecked}" >
+                                            <Label>AccMode</Label>
+                                            <TextBox Width="150" x:Name="tbcddAvailable" Margin="5" ToolTip="Input cdd available net signal name"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.CDDGenericConfig.CDDAvailable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" IsEnabled="{Binding ElementName=cbIncCDDGenericTC,Path=IsChecked}" >
+                                            <Label>DOORS Link</Label>
+                                            <TextBox Width="800" x:Name="tbCDDDoosLink" Margin="5"  Text= "{Binding ElementName=MainWindow1, Path=ConfManager.CDDGenericConfig.DoorsLink,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        </StackPanel>
+
+                                    </WrapPanel>
+                                </lib:FlipPanel.FrontContent>
+                                <lib:FlipPanel.BackContent>
+                                    <Grid Margin="6">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="200"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal" >
+                                            <TextBlock TextWrapping="Wrap" Margin="3" FontSize="16" Foreground="DarkMagenta">HBA Regression Test Case:</TextBlock>
+                                            <Button Background="Coral" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Right" Name="btnCDDImpBus"  Click="btnImpBus_Click" Tag="CDD">Import2QC</Button>
+                                        </StackPanel>
+
+                                        <DataGrid Name="dgCDDBus" RowHeight="50"  CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserSortColumns="True"  SelectionMode="Extended" SelectionUnit="CellOrRowHeader" AutoGenerateColumns="False" LoadingRow="DataGrid_LoadingRow" Grid.Row="1" 
+                                              ItemsSource="{Binding ElementName=MainWindow1,Path=ConfManager.CDDGenericConfig.CDDGenericTScript}" VerticalScrollBarVisibility="Visible" >
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Name" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=TestCaseName }" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="TestDescription" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=TestDescription}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="ExpectedResult" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=ExpectedResult}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="DoorsLink" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=DoorsLink}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Subject" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=QcFolderPath}" HorizontalAlignment="Stretch"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Script" IsReadOnly="false" MinWidth="100">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <TextBox Text="{Binding Path=TestCaseScript}" HorizontalAlignment="Stretch" TextWrapping="Wrap"/>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+
+                                                </DataGridTemplateColumn>
+
+                                            </DataGrid.Columns>
+
+                                        </DataGrid>
+                                    </Grid>
+                                </lib:FlipPanel.BackContent>
+                            </lib:FlipPanel>
+                        </Expander.Content>
+                    </Expander>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!--Status bar area-->
+        <Border HorizontalAlignment="Stretch" Height="21" Margin="0,0,0,0" VerticalAlignment="Bottom" MinWidth="517"  Grid.Row="2" >
+            <StatusBar x:Name="statusBar" BorderThickness="1" FontSize="9.333"/>
+        </Border>
+        <ToolBarTray HorizontalAlignment="Stretch" Height="40" VerticalAlignment="Top" MinWidth="517" Grid.Row="0" Margin="0,2,0,2">
+            <ToolBar Band="1" x:Name="toolBarDBC" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40"  >
+                <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" x:Name="btnDBC" ToolTip="select DBC file to open"  HorizontalAlignment="Left" VerticalAlignment="Top" Click="buttonOpenDBC_Click" Height="32" Margin="0,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="Icon/openDBC.jpg" Margin="0,0,0,5" />
+                            <Label>Load DBC</Label>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="btnSaveDBC" ToolTip="Save DBC file with added not used signals"  HorizontalAlignment="Left" VerticalAlignment="Top"  Click="btnSaveDBC_Click"  Height="32" Margin="0,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="Icon/saveDBC.png" Margin="0,0,0,5" />
+                            <Label>Save DBC</Label>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="btnCompareDBC" ToolTip="Compare new DBC with loaded DBC file"  HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnCompareDBC_Click"  Height="32" Margin="0,0,0,0">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="Icon/compareDBC.png" Margin="0,0,0,5" />
+                            <Label>Compare DBC</Label>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+            </ToolBar>
+            <ToolBar Band="1" x:Name="toolBarConfig" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40"  >
+                <Button x:Name="btnLoadConfig" ToolTip="Load Project Configuration"  HorizontalAlignment="Left" VerticalAlignment="Top"   Height="32" Margin="0,0,0,0" Click="btnLoadConfig_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="Icon/loadConfig.png" Margin="0,0,0,5" />
+                            <Label>Load Configuration</Label>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <Button x:Name="btnSaveConfig" ToolTip="Save Project Configuration"  HorizontalAlignment="Left" VerticalAlignment="Top"    Height="32" Margin="0,0,0,0" Click="btnSaveConfig_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="Icon/saveConfig.png" Margin="0,0,0,5" />
+                            <Label>Save Configuration</Label>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </ToolBar>
+            <ToolBar Band="1" x:Name="toolBarScript" HorizontalAlignment="Left" VerticalAlignment="Top" Height="40"  >
+                <Button x:Name="btnSaveOpState" ToolTip="Save Project OprationState.pm"  HorizontalAlignment="Left" VerticalAlignment="Top"   Height="32" Margin="0,0,0,0" Click="btnSaveOpState_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="Icon/genOpState.png" Margin="0,0,0,5" />
+                            <Label>Save Operation States</Label>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <Button x:Name="btnSaveTestScript" ToolTip="Save Project Test Script.par"  HorizontalAlignment="Left" VerticalAlignment="Top"   Height="32" Margin="0,0,0,0" Click="btnSaveTestScript_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="Icon/genPar.png" Margin="0,0,0,5" RenderTransformOrigin="-1675.66,-86.786" />
+                            <Label>Save Pararameters(All)</Label>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="btnImpQC" ToolTip="Upload all test case to QC.par, you can upload seperately in each expander"  HorizontalAlignment="Left" VerticalAlignment="Top"   Height="32" Margin="0,0,0,0" Click="btnImpQC_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Stretch="Fill" Source="Icon/imp2QC.png" Margin="0,0,0,5" RenderTransformOrigin="-1675.66,-86.786" />
+                            <Label>Update Test Case to QC(All)</Label>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+    </Grid>
+</Controls:MetroWindow>

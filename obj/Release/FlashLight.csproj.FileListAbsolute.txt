@@ -1,0 +1,8 @@
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Release\FlashLight.csprojAssemblyReference.cache
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Release\Resources\TextBlock.baml
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Release\MainWindow.g.cs
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Release\QcLogin.g.cs
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Release\App.g.cs
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Release\GeneratedInternalTypeHelper.g.cs
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Release\CANTxGenerator_MarkupCompile.cache
+\\szhvm158\TEST\Jack_Xia\FlashLight\SourceCode\obj\Release\CANTxGenerator_MarkupCompile.lref

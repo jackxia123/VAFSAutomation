@@ -1,0 +1,5 @@
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.Keyword\bin\Debug\RBT.Universal.Keyword.dll
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.Keyword\bin\Debug\RBT.Universal.Keyword.pdb
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.Keyword\obj\Debug\RBT.Universal.Keywords.csproj.CoreCompileInputs.cache
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.Keyword\obj\Debug\RBT.Universal.Keyword.dll
+C:\Users\XAJ5SZH\Desktop\TFS New\RBT_CANTx_Generator\CANTxGenerator-branch\RBT.Universal.Keyword\obj\Debug\RBT.Universal.Keyword.pdb
